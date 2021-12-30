@@ -9,11 +9,12 @@
 class MyCallbacks: public BLECharacteristicCallbacks {
     void onWrite(BLECharacteristic *pCharacteristic) {
       Serial.println("Hello from on Write\n");
-      digitalWrite(12, LOW);
+      
       if(!pCharacteristic->getValue().compare("Hassan")){
-      pCharacteristic->setValue("Hassan");
-      Serial.println("Hello from onwrite if");
-      std::string value = pCharacteristic->getValue();
+        digitalWrite(12, LOW);
+        pCharacteristic->setValue("Hassan");
+        Serial.println("Hello from onwrite if");
+        std::string value = pCharacteristic->getValue();
       }
  }
  void onRead(BLECharacteristic *pCharacteristic){
