@@ -49,6 +49,8 @@ with ble.gap_connect(address_type, address) as conn:
     if properties & ble.PROP_WRITE:
         helloMessage = conn.gattc_read_characteristic(hello_characteristic)
         print(helloMessage)
-
-    conn.gattc_write_characteristic(characteristic_uuid, b'Hassan')
+    try:
+    	conn.gattc_write_characteristic(hello_characteristic, b'Hassan')
+    except Exception as e:
+	print(e)
     time.sleep(1)
