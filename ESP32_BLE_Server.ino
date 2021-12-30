@@ -8,17 +8,17 @@
 
 class MyCallbacks: public BLECharacteristicCallbacks {
     void onWrite(BLECharacteristic *pCharacteristic) {
-      if(pCharacteristic->getValue() == "Hello World says Neil"){
+      Serial.println("Hello from on Write\n");
+      digitalWrite(12, LOW);
+      if(!pCharacteristic->getValue().compare("Hassan")){
       pCharacteristic->setValue("Hassan");
+      Serial.println("Hello from onwrite if");
       std::string value = pCharacteristic->getValue();
-         
-
       }
-       digitalWrite(13, HIGH);
  }
  void onRead(BLECharacteristic *pCharacteristic){
     std::string value = pCharacteristic->getValue();
-          digitalWrite(13, HIGH);
+          digitalWrite(12, HIGH);
     Serial.println(pCharacteristic->getValue().c_str());
   }
 
@@ -29,7 +29,7 @@ void setup()
     Serial.begin(115200);
     Serial.println("Starting BLE work!");
 
-    pinMode(13, OUTPUT);
+    pinMode(12, OUTPUT);
     
     BLEDevice::init("IOTGroup19");
     BLEServer *pServer = BLEDevice::createServer();
