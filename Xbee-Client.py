@@ -33,6 +33,11 @@ io_characteristic_uuid = 0x2A56
 service_uuid = "4fafc201-1fb5-459e-8fcc-c5c9c331914b"
 characteristic_uuid = "beb5483e-36e1-4688-b7f5-ea07361b26a8"
 
+
+service_uuid_1 = "d9f5f870-6d7f-11ec-90d6-0242ac120003"
+characteristic_uuid_1 = "f0964972-6d7f-11ec-90d6-0242ac120003"
+
+
 ble.active(True)
 print("Attempting connection to: {}".format(THUNDERBOARD_ADDRESS))
 
@@ -42,15 +47,16 @@ with ble.gap_connect(address_type, address) as conn:
     hello_characteristic = get_characteristics_from_uuids(
         conn, service_uuid, characteristic_uuid)[0]
 
+    service_characteristic_1 = get_characteristics_from_uuids(
+        conn, service_uuid_1, characteristic_uuid_1)[0]
+
     # while True:
     properties = hello_characteristic[2]
     print(properties)
     print(ble.PROP_WRITE)
     if properties & ble.PROP_WRITE:
-        helloMessage = conn.gattc_read_characteristic(hello_characteristic)
+        helloMessage = conn.gattc_read_characteristic(service_characteristic_1)
         print(helloMessage)
-    try:
-    	conn.gattc_write_characteristic(hello_characteristic, b'Hassan')
-    except Exception as e:
-	print(e)
+
+    conn.gattc_write_characteristic(characteristic_uuid_1, b'HIGH')
     time.sleep(1)
